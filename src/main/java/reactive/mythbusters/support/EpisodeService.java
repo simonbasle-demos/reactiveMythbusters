@@ -42,6 +42,10 @@ public class EpisodeService {
 				.delayElement(Duration.ofMillis(300 * rng.nextInt(3)));
 	}
 
+	public String getDescriptionSync(Episode episode) {
+		return getDescription(episode).block();
+	}
+
 	public Mono<String> getDescription(int episodeNumber) {
 		switch (episodeNumber) {
 			case 25: return Mono.just("This episode first aired on February 16, 2005, and featured three fascinating and completely unrelated myths: Is “Chinese water torture” really torturous? If a person gets shot with a gun, is there enough momentum to propel them backwards? And, most importantly, are our childhood South Park dreams confirmed—is there really a musical note that can make people crap their pants?");

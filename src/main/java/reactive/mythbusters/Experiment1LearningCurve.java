@@ -1,8 +1,11 @@
+package reactive.mythbusters;
+
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import reactive.mythbusters.support.EpisodeService;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -11,11 +14,7 @@ import reactor.core.publisher.Mono;
  */
 public class Experiment1LearningCurve {
 
-	private static List<String> EPISODE_NAMES = Arrays.asList(
-			"Brown Note", "MacGyver Myths", "Duct Tape Island", "Titanic Survival",
-			"Alcatraz Escape", "Salsa Escape", "Youtube Special", "Explosions A to Z"
-	);
-
+	private static final List<String> EPISODE_NAMES = EpisodeService.EPISODE_NAMES;
 	private final Random rng = new Random();
 
 	private void imperativeStyle() {

@@ -1,0 +1,23 @@
+plugins {
+    id "io.spring.dependency-management" version "1.0.3.RELEASE"
+}
+
+apply plugin: 'java'
+
+dependencyManagement {
+    imports {
+        mavenBom "io.projectreactor:reactor-bom:Bismuth-SR2"
+    }
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'io.projectreactor:reactor-core'
+
+    // Use JUnit test framework
+    testCompile 'junit:junit:4.12'
+    testCompile 'io.projectreactor:reactor-test'
+}

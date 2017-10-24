@@ -15,13 +15,12 @@ import reactor.core.publisher.Mono;
 public class Experiment1LearningCurve {
 
 	private static final List<String> EPISODE_NAMES = EpisodeService.EPISODE_NAMES;
-	private final Random rng = new Random();
 
 	private void imperativeStyle() {
 		try {
 			for (String episode : EPISODE_NAMES) {
 				System.out.println("\t" + episode);
-				Thread.sleep(500 + 500 * rng.nextInt(3));
+				Thread.sleep(500);
 			}
 		}
 		catch (InterruptedException e) {
@@ -33,9 +32,8 @@ public class Experiment1LearningCurve {
 		Flux<String> flux =
 		//<editor-fold desc="How could I do that using Flux?">
 				Flux.fromIterable(EPISODE_NAMES)
-		                        .map(name -> "\t" + name)
-		                        .delayUntil(it -> Mono.delay(Duration.ofMillis(
-				                        500 + 500 * rng.nextInt(3))));
+				    .map(name -> "\t" + name)
+				    .delayElements(Duration.ofMillis(500));
 		//</editor-fold>
 
 		//<editor-fold desc="Nothing happens...">

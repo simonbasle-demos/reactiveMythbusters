@@ -1,6 +1,5 @@
 package reactive.mythbusters.support;
 
-import java.lang.reflect.Array;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +17,8 @@ public class EpisodeService {
 
 	public static final List<String> EPISODE_NAMES = Arrays.asList(
 			"Explosions A to Z",
-			"Salsa Escape","Youtube Special",
+			"Salsa Escape",
+			"Youtube Special",
 			"Alcatraz Escape",
 			"Titanic Survival",
 			"Duct Tape Island",
@@ -28,8 +28,8 @@ public class EpisodeService {
 
 	private static final List<Episode> TOP = Arrays.asList(
 			new Episode(20, "Explosions A to Z"),
-			new Episode(117, "Youtube Special"),
 			new Episode(26, "Salsa Escape"),
+			new Episode(117, "Youtube Special"),
 			new Episode(8, "Alcatraz Escape"),
 			new Episode(190, "Titanic Survival"),
 			new Episode(179, "Duct Tape Island"),

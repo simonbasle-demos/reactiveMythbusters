@@ -18,7 +18,6 @@ public class DescribedEpisode extends Episode {
 
 	@Override
 	public String toString() {
-		return "Episode " + number + " - " + title
-				+ "\n" + description;
+		return super.toString() + "\n" + description;
 	}
 }

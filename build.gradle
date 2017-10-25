@@ -32,9 +32,14 @@ repositories {
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-webflux')
     compile 'io.projectreactor:reactor-core'
+    compile 'io.projectreactor:reactor-test'
+    compile 'org.assertj:assertj-core:3.8.0'
 
     // Use JUnit test framework
     testCompile('org.springframework.boot:spring-boot-starter-test')
-    testCompile 'io.projectreactor:reactor-test'
-    testCompile 'org.assertj:assertj-core:3.8.0'
+}
+
+compileJava {
+    sourceCompatibility = 1.9
+    targetCompatibility = 1.9
 }

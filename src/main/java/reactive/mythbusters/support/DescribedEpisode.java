@@ -12,6 +12,10 @@ public class DescribedEpisode extends Episode {
 		this.description = description == null ? "" : description;
 	}
 
+	public DescribedEpisode(Episode ep, String description) {
+		this(ep.getNumber(), ep.getTitle(), description);
+	}
+
 	public String getDescription() {
 		return description;
 	}

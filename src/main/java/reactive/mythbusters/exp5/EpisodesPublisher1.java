@@ -14,8 +14,7 @@ public class EpisodesPublisher1 implements Flow.Publisher<Episode> {
 	public void subscribe(Flow.Subscriber<? super Episode> subscriber) {
 		//TODO look at the Publisher and Subscriber interfaces, looks easy, right?
 		EpisodeService service = new EpisodeService();
-		for (Episode e : service.topEpisodes()) {
-			subscriber.onNext(e);
-		}
+
+		//TODO maybe we can simply loop through the episodes?
 	}
 }

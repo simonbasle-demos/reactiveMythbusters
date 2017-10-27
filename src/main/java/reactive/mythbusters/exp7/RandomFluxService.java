@@ -17,7 +17,7 @@ public class RandomFluxService {
 			return Flux.just(1, 2, 0, 3, 4)
 			           .compose(operation)
 			           //TODO make this path identifiable in case of error
-			           .checkpoint("fixed values", true);
+			           ;
 		}
 		return Flux.just(
 				rng.nextInt(5),
@@ -27,6 +27,6 @@ public class RandomFluxService {
 				rng.nextInt(1))
 		           .compose(operation)
 		           //TODO make this path identifiable in case of error
-		           .checkpoint("random values", true);
+		           ;
 	}
 }

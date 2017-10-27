@@ -31,28 +31,12 @@ public class Experiment1LearningCurve {
 	private void reactiveStyle() {
 		Flux<String> flux =
 		//TODO How could I do that using Flux?
-				Flux.fromIterable(EPISODE_NAMES)
-				    .map(name -> "\t" + name)
-				    .delayElements(Duration.ofMillis(500));
-
+			null;
 		//TODO nothing happens?
-		//...until you subscribe
-		flux.subscribe(System.out::println, e -> System.err.println("A error occurred: " + e));
 
 		//TODO alternative 1
-//		CountDownLatch latch = new CountDownLatch(1);
-//		flux.doFinally(it -> latch.countDown())
-//		    .subscribe(System.out::println, e -> System.err.println("A error occurred: " + e));
-//		try {
-//			latch.await();
-//		}
-//		catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
 
 		//TODO better alternative
-		flux.doOnNext(System.out::println)
-		    .blockLast();
 	}
 
 	public static void main(String[] args) {

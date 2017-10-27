@@ -24,10 +24,6 @@ public class Experiment6Test {
 		Flux<Episode> toTest = experiment.topEpisodes();
 
 		//TODO test the flux of top episodes
-		StepVerifier.create(toTest)
-		            .expectNextSequence(service.topEpisodes())
-		            .expectComplete()
-		            .verify();
 	}
 
 	@Test
@@ -35,12 +31,10 @@ public class Experiment6Test {
 		Flux<DescribedEpisode> toTest = experiment.describedEpisodes();
 
 		//TODO test an erroring Flux
-		StepVerifier.create(toTest)
-		            .assertNext(ep -> assertThat(ep.getTitle()).isEqualTo("Explosions A to Z"))
-		            .assertNext(ep -> assertThat(ep.getTitle()).isEqualTo("Salsa Escape"))
-		            .assertNext(ep -> assertThat(ep.getTitle()).isEqualTo("Youtube Special"))
-		            .expectErrorMessage("Failed to fetch description for Episode 8, the description couldn't escape from Alcatraz")
-		            .verify();
+		//"Explosions A to Z"
+		//"Salsa Escape"
+		//"Youtube Special"
+		//"Failed to fetch description for Episode 8, the description couldn't escape from Alcatraz"
 	}
 
 	@Test
@@ -48,29 +42,14 @@ public class Experiment6Test {
 		Flux<String> toTest = experiment.oneEpisodeTitlePerSecond();
 
 		//TODO test delayed Flux, look at the test duration
-		StepVerifier.create(toTest)
-		            .expectNextCount(8)
-		            .verifyComplete();
 	}
 
 	@Test
 	public void oneEpisodePerSecondVirtualTime() throws Exception {
 		//TODO run the test below, look at the test duration and try to improve it
-//		Flux<String> flux = experiment.oneEpisodeTitlePerSecond();
-//
-//		StepVerifier.withVirtualTime(() -> flux)
-//		            .expectSubscription()
-//		            .expectNoEvent(Duration.ofSeconds(1))
-//		            .expectNext("Explosions A to Z")
-//		            .thenAwait(Duration.ofSeconds(4))
-//		            .expectNext("Salsa Escape", "Youtube Special",
-//				            "Alcatraz Escape", "Titanic Survival")
-//		            .thenAwait(Duration.ofMinutes(1))
-//		            .expectNext("Duct Tape Island", "MacGyver Myths", "Brown Note")
-//		            .expectComplete()
-//		            .verify(Duration.ofSeconds(1));
+		Flux<String> flux = experiment.oneEpisodeTitlePerSecond();
 
-		StepVerifier.withVirtualTime(experiment::oneEpisodeTitlePerSecond)
+		StepVerifier.withVirtualTime(() -> flux)
 		            .expectSubscription()
 		            .expectNoEvent(Duration.ofSeconds(1))
 		            .expectNext("Explosions A to Z")

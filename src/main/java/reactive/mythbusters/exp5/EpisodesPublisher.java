@@ -25,11 +25,6 @@ public class EpisodesPublisher implements Flow.Publisher<Episode> {
 		//TODO we need to track request and cancellation
 		private int produced;
 
-		private volatile boolean cancelled;
-		private volatile long    requested;
-		static final AtomicLongFieldUpdater<EpisodesSubscription> REQUESTED =
-				AtomicLongFieldUpdater.newUpdater(EpisodesSubscription.class, "requested");
-
 		EpisodesSubscription(Flow.Subscriber<? super Episode> target) {
 			this.target = target;
 			this.episodes = new EpisodeService().topEpisodes();
@@ -39,46 +34,27 @@ public class EpisodesPublisher implements Flow.Publisher<Episode> {
 		public void request(long n) {
 			if (n <= 0) throw new IllegalArgumentException("Spec. Rule 3.9 - Cannot request a non strictly positive number");
 
-			for(;;) {
-				long r = requested;
-				long nr = r + n;
-				if (nr < 0L) nr = Long.MAX_VALUE;
+			//TODO safely update the request and cap it to Long.MAX_VALUE
 
-				if (REQUESTED.compareAndSet(this, r, nr)) {
-					break;
-				}
-			}
-
-			if (requested == Long.MAX_VALUE) {
-				fastpath();
-			}
-			else {
-				slowpath(n);
-			}
+			//TODO choose between fastpath() and slowpath().
 		}
 
 		@Override
 		public void cancel() {
-			this.cancelled = true;
+			//TODO implement cancellation?
 		}
 
 		void fastpath() {
+			//emit all the data
 			for (int i = 0; i < episodes.size(); i++) {
 				Episode episode = episodes.get(i);
 
-				if (cancelled) {
-					return;
-				}
-				if (i >= this.produced) {
-					this.produced++;
-					target.onNext(episode);
-				}
+				//TODO BUT take cancellation into account
+
+				//TODO AND ensure not to repeat data from a previous small request
 			}
 
-			if (cancelled) {
-				return;
-			}
-			target.onComplete();
+			//TODO then complete, once again taking cancellation into account
 		}
 
 		void slowpath(long n) {
@@ -87,42 +63,12 @@ public class EpisodesPublisher implements Flow.Publisher<Episode> {
 			int end = episodes.size();
 			int emit = 0;
 
-			for(;;) {
-				if (cancelled) {
-					return;
-				}
-
-				while (emit != n && index != end) {
-					tgt.onNext(episodes.get(index));
-
-					if (cancelled) {
-						return;
-					}
-
-					emit++;
-					index++;
-				}
-
-				if (cancelled) {
-					return;
-				}
-
-				if (index == end) {
-					tgt.onComplete();
-					return;
-				}
-
-				//now update request and produced
-				long r = requested;
-				if (r == emit) {
-					this.produced = index;
-					r = REQUESTED.addAndGet(this, -emit);
-					if (r == 0) {
-						return;
-					}
-					emit = 0;
-				}
-			}
+			//TODO drain loop that:
+			//TODO  - support cancellation
+			//TODO  - emit relevant data and update emit/index
+			//TODO  - completes if needed (exits loop)
+			//TODO  - updates the request (-emit) and produced (index) if r == emit
+			//TODO  - exits if no more request, otherwise resets emit
 		}
 	}
 }

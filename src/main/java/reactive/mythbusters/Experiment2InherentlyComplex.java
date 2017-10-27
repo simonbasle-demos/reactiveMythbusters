@@ -16,13 +16,8 @@ public class Experiment2InherentlyComplex {
 		Flux.fromIterable(service.topEpisodes())
 		    //TODO fetch the description for each episode
 		    //TODO transform it it to keep only 140 chars via StringUtils.truncateForTweet
-		    .concatMap(ep -> service.getDescription(ep)
-		                          .map(StringUtils::truncateForTweet)
-		                          .map(desc -> new DescribedEpisode(ep, desc))
-		    )
 		    //TODO print the full episode info (description included), but a short message rather than stacktrace in case of error
-		    .subscribe(System.out::println,
-				    e -> System.err.println("Error getting description of episode: " + e));
+		    .subscribe();
 
 		Thread.sleep(2000);
 	}

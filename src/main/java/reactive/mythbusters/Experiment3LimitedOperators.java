@@ -80,20 +80,15 @@ public class Experiment3LimitedOperators {
 		Flux<RankedEpisode> result =
 				Flux.fromIterable(service.topEpisodes())
 				    //TODO change to introduce an everchanging random delay
-//				    .delayElements(Duration.ofMillis(500 + 500 * rng.nextInt(3)))
-                    .delayUntil(it -> Mono.delay(Duration.ofMillis(500 + 500 * rng.nextInt(3))))
+				    .delayElements(Duration.ofMillis(500 + 500 * rng.nextInt(3)))
                     //TODO how could we verify the delay?
                     //.something()
-                    .elapsed()
                     .compose(this::displayDelay)
                     //TODO change to keep order and delay error when fetching description
-//                    .flatMap(fetchDescription)
-                    .concatMapDelayError(fetchDescription, true, 8)
+                    .flatMap(fetchDescription)
                     //TODO change to correctly add the ranking
-//                    .map(ep -> new RankedEpisode(ep.getNumber(), ep.getTitle(),
-//		                    -1, ep.getDescription()));
-                    .zipWith(Flux.range(1, 100), (ep, rank) ->
-		                    new RankedEpisode(ep, rank, ep.getDescription()));
+                    .map(ep -> new RankedEpisode(ep.getNumber(), ep.getTitle(),
+		                    -1, ep.getDescription()));
 
 		return result;
 	}

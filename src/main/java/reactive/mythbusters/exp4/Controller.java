@@ -5,6 +5,7 @@ import java.time.Duration;
 import reactive.mythbusters.support.DescribedEpisode;
 import reactive.mythbusters.support.Episode;
 import reactive.mythbusters.support.EpisodeService;
+import reactive.mythbusters.support.StringUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -28,7 +29,7 @@ public class Controller {
 	public Flux<String> sse() {
 		return Flux.fromIterable(service.topEpisodes())
 		           .flatMap(ep -> service.getDescription(ep)
-		                                 .map(desc -> desc.substring(0, 140) + "...")
+		                                 .map(StringUtils::truncateForTweet)
 		                                 .onErrorReturn("<MISSING DESCRIPTION>")
 		                                 .map(desc -> new DescribedEpisode(ep.getNumber(),
 				                                 ep.getTitle(), desc)))

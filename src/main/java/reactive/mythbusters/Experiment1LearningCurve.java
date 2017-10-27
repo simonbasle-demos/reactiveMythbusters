@@ -30,19 +30,17 @@ public class Experiment1LearningCurve {
 
 	private void reactiveStyle() {
 		Flux<String> flux =
-		//<editor-fold desc="How could I do that using Flux?">
+		//TODO How could I do that using Flux?
 				Flux.fromIterable(EPISODE_NAMES)
 				    .map(name -> "\t" + name)
 				    .delayElements(Duration.ofMillis(500));
-		//</editor-fold>
 
-		//<editor-fold desc="Nothing happens...">
+		//TODO nothing happens?
 		//...until you subscribe
-//		flux.subscribe(System.out::println, e -> System.err.println("A error occurred: " + e));
-		//</editor-fold>
+		flux.subscribe(System.out::println, e -> System.err.println("A error occurred: " + e));
 
-		//<editor-fold desc="Still Nothing?">
-		//		CountDownLatch latch = new CountDownLatch(1);
+		//TODO alternative 1
+//		CountDownLatch latch = new CountDownLatch(1);
 //		flux.doFinally(it -> latch.countDown())
 //		    .subscribe(System.out::println, e -> System.err.println("A error occurred: " + e));
 //		try {
@@ -51,12 +49,10 @@ public class Experiment1LearningCurve {
 //		catch (InterruptedException e) {
 //			e.printStackTrace();
 //		}
-		//</editor-fold>
 
-		//<editor-fold desc="But we can do even better!">
-		//		flux.doOnNext(System.out::println)
-//		    .blockLast();
-		//</editor-fold>
+		//TODO better alternative
+		flux.doOnNext(System.out::println)
+		    .blockLast();
 	}
 
 	public static void main(String[] args) {

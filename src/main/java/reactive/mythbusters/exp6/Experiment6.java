@@ -14,6 +14,7 @@ import reactor.core.scheduler.Schedulers;
 public class Experiment6 {
 
 	public static void main(String[] args) {
+		//TODO go edit the test
 		System.err.println("Let's meet in /src/main/test/reactive/mythbusters/exp6/Experiment6Test instead");
 	}
 

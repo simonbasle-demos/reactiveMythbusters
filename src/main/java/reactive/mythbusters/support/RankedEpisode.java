@@ -12,6 +12,11 @@ public class RankedEpisode extends DescribedEpisode {
 		this.rank = rank;
 	}
 
+	public RankedEpisode(Episode ep, int rank, String description) {
+		super(ep.getNumber(), ep.getTitle(), description);
+		this.rank = rank;
+	}
+
 	public int getRank() {
 		return rank;
 	}

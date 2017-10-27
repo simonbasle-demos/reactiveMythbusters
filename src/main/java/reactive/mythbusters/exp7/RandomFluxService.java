@@ -16,6 +16,7 @@ public class RandomFluxService {
 		if (rng.nextBoolean()) {
 			return Flux.just(1, 2, 0, 3, 4)
 			           .compose(operation)
+			           //TODO make this path identifiable in case of error
 			           .checkpoint("fixed values", true);
 		}
 		return Flux.just(
@@ -25,6 +26,7 @@ public class RandomFluxService {
 				rng.nextInt(5),
 				rng.nextInt(5))
 		           .compose(operation)
+		           //TODO make this path identifiable in case of error
 		           .checkpoint("random values", true);
 	}
 }

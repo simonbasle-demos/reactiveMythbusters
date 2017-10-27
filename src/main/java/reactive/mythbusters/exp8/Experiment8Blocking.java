@@ -28,6 +28,7 @@ public class Experiment8Blocking {
 
 		Mono.delay(Duration.ofSeconds(2))
 		    .flatMapMany(i -> {
+		    	//TODO wonder if I could sleep here?
 			    safeSleep(1500);
 			    return Flux.just(1, 2, 3);
 		    })

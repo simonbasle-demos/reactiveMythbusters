@@ -28,6 +28,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class Experiment5Flow {
 
 	public static void main(String[] args) {
+		//TODO attempt at implementing Flow.Publisher, test the attempts
+
 		testFlow(new EpisodesPublisher1(), 1);
 		testFlow(new EpisodesPublisher2(), 2);
 		testFlow(new EpisodesPublisher3(), 3);

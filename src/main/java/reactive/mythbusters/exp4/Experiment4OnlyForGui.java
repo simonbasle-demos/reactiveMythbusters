@@ -24,6 +24,7 @@ import org.springframework.web.reactive.config.EnableWebFlux;
 public class Experiment4OnlyForGui {
 
 	public static void main(String[] args) {
+		//TODO make something else than a GUI?
 		SpringApplication.run(Experiment4OnlyForGui.class, args);
 	}
 

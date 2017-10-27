@@ -2,6 +2,7 @@ package reactive.mythbusters;
 
 import reactive.mythbusters.support.DescribedEpisode;
 import reactive.mythbusters.support.EpisodeService;
+import reactive.mythbusters.support.StringUtils;
 import reactor.core.publisher.Flux;
 
 /**
@@ -13,19 +14,17 @@ public class Experiment2InherentlyComplex {
 		EpisodeService service = new EpisodeService();
 
 		Flux.fromIterable(service.topEpisodes())
-		    //fetch the description for each episode, transform it to keep only 140 chars
-		    .flatMap(ep -> service.getDescription(ep)
-		                          .map(desc -> desc.substring(0, 140) + "...\n")
-		                          .map(desc -> new DescribedEpisode(ep.getNumber(),
-				                          ep.getTitle(),
-				                          desc))
+		    //TODO fetch the description for each episode
+		    //TODO transform it it to keep only 140 chars via StringUtils.truncateForTweet
+		    .concatMap(ep -> service.getDescription(ep)
+		                          .map(StringUtils::truncateForTweet)
+		                          .map(desc -> new DescribedEpisode(ep, desc))
 		    )
-		    //print the full episode info (description included)
-		    //but a short message rather than stacktrace in case of error
+		    //TODO print the full episode info (description included), but a short message rather than stacktrace in case of error
 		    .subscribe(System.out::println,
 				    e -> System.err.println("Error getting description of episode: " + e));
 
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 	}
 
 }

@@ -12,7 +12,7 @@ public class EpisodesPublisher1 implements Flow.Publisher<Episode> {
 
 	@Override
 	public void subscribe(Flow.Subscriber<? super Episode> subscriber) {
-		//looks easy, right?
+		//TODO look at the Publisher and Subscriber interfaces, looks easy, right?
 		EpisodeService service = new EpisodeService();
 		for (Episode e : service.topEpisodes()) {
 			subscriber.onNext(e);

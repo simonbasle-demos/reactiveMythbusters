@@ -12,6 +12,7 @@ import reactive.mythbusters.support.DescribedEpisode;
 import reactive.mythbusters.support.Episode;
 import reactive.mythbusters.support.EpisodeService;
 import reactive.mythbusters.support.RankedEpisode;
+import reactive.mythbusters.support.StringUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.util.function.Tuple2;
@@ -73,8 +74,8 @@ public class Experiment3LimitedOperators {
 	public Flux<RankedEpisode> reactiveRank() {
 		Function<? super Episode, Publisher<? extends DescribedEpisode>> fetchDescription = ep ->
 				service.getDescription(ep.getNumber())
-				       .map(desc -> desc.substring(0, 140) + "...\n")
-				       .map(desc -> new DescribedEpisode(ep.getNumber(), ep.getTitle(), desc));
+				       .map(StringUtils::truncateForTweet)
+				       .map(desc -> new DescribedEpisode(ep, desc));
 
 		Flux<RankedEpisode> result =
 				Flux.fromIterable(service.topEpisodes())
@@ -92,8 +93,7 @@ public class Experiment3LimitedOperators {
 //                    .map(ep -> new RankedEpisode(ep.getNumber(), ep.getTitle(),
 //		                    -1, ep.getDescription()));
                     .zipWith(Flux.range(1, 100), (ep, rank) ->
-		                    new RankedEpisode(ep.getNumber(), ep.getTitle(),
-		                    rank, ep.getDescription()));
+		                    new RankedEpisode(ep, rank, ep.getDescription()));
 
 		return result;
 	}

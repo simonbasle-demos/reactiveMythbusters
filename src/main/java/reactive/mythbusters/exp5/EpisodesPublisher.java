@@ -14,8 +14,7 @@ public class EpisodesPublisher implements Flow.Publisher<Episode> {
 
 	@Override
 	public void subscribe(Flow.Subscriber<? super Episode> subscriber) {
-		EpisodesSubscription sub = new EpisodesSubscription(subscriber);
-		subscriber.onSubscribe(sub);
+		subscriber.onSubscribe(new EpisodesSubscription(subscriber));
 	}
 
 	private static class EpisodesSubscription implements Flow.Subscription {
@@ -23,6 +22,7 @@ public class EpisodesPublisher implements Flow.Publisher<Episode> {
 		private final Flow.Subscriber<? super Episode> target;
 		private final List<Episode>                    episodes;
 
+		//TODO we need to track request and cancellation
 		private int produced;
 
 		private volatile boolean cancelled;

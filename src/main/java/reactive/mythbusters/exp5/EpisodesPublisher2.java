@@ -23,7 +23,9 @@ public class EpisodesPublisher2 implements Flow.Publisher<Episode> {
 
 		@Override
 		public void request(long n) {
-			//TODO emit the episodes only if there's been a request
+			episodes.stream()
+			        .limit(n)
+			        .forEach(target::onNext);
 		}
 
 		@Override
@@ -34,6 +36,7 @@ public class EpisodesPublisher2 implements Flow.Publisher<Episode> {
 
 	@Override
 	public void subscribe(Flow.Subscriber<? super Episode> subscriber) {
+		//TODO maybe we need a Subscription?
 		subscriber.onSubscribe(new EpisodesSubscription(subscriber));
 	}
 }

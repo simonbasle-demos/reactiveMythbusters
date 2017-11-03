@@ -28,13 +28,14 @@ public class EpisodesPublisher3 implements Flow.Publisher<Episode> {
 		public void request(long n) {
 			final Flow.Subscriber<? super Episode> a = target;
 
-			//TODO restart emit at the last emitted episode (index)
 			for (int i = index; i != Math.min(n, episodes.size()); i++) {
 				a.onNext(episodes.get(i));
 				index++;
 			}
 
-			//TODO don't forget to complete
+			if (index >= episodes.size()) {
+				a.onComplete();
+			}
 		}
 
 		@Override
@@ -45,6 +46,7 @@ public class EpisodesPublisher3 implements Flow.Publisher<Episode> {
 
 	@Override
 	public void subscribe(Flow.Subscriber<? super Episode> subscriber) {
+		//TODO the Subscription need more work
 		subscriber.onSubscribe(new EpisodesSubscription(subscriber));
 	}
 }

@@ -21,10 +21,10 @@ public class RandomFluxService {
 		}
 		return Flux.just(
 				rng.nextInt(5),
-				rng.nextInt(5),
-				rng.nextInt(5),
-				rng.nextInt(5),
-				rng.nextInt(5))
+				rng.nextInt(4),
+				rng.nextInt(3),
+				rng.nextInt(2),
+				rng.nextInt(1))
 		           .compose(operation)
 		           //TODO make this path identifiable in case of error
 		           .checkpoint("random values", true);

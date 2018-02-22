@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.0.0.M5'
+        springBootVersion = '2.0.0.RC2'
     }
     repositories {
         mavenCentral()
@@ -18,7 +18,7 @@ apply plugin: 'io.spring.dependency-management'
 
 dependencyManagement {
     imports {
-        mavenBom "io.projectreactor:reactor-bom:Bismuth-SR2"
+        mavenBom "io.projectreactor:reactor-bom:Bismuth-SR6"
     }
 }
 

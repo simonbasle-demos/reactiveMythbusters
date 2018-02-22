@@ -46,7 +46,6 @@ public class EpisodesPublisher3 implements Flow.Publisher<Episode> {
 
 	@Override
 	public void subscribe(Flow.Subscriber<? super Episode> subscriber) {
-		//TODO the Subscription need more work
 		subscriber.onSubscribe(new EpisodesSubscription(subscriber));
 	}
 }
